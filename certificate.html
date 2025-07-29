@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chứng Chỉ Chuyên Nghiệp (Song Ngữ) - Lê Quang Minh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* 
+      DESIGN & CODE V17.0 - FINAL LAYOUT & ALIGNMENT FIX
+      -----------------------------------------------
+      Key Fixes:
+      1. PERFECT CENTERING: The alignment bug is fixed. All content blocks are now properly
+         centered using a robust flexbox structure, eliminating the rightward shift.
+      2. PERSISTENT 3-COLUMN LAYOUT: The "Academic Results" section is now permanently 3 columns
+         in both landscape and portrait modes as requested.
+      3. GUARANTEED NO-WRAP: The right footer column has been given more space and font sizes
+         adjusted to ensure the certificate code and date display cleanly on two separate,
+         non-breaking lines.
+    */
+    
+    :root {
+      --color-primary-text: #383838;
+      --color-accent: #B9904A;
+      --color-label: #666;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background: #f0f0f0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary-text);
+    }
+
+    .certificate {
+      width: 1000px;
+      height: 707px;
+      background: #fff;
+      position: relative;
+      box-sizing: border-box;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: all 0.5s ease-in-out;
+
+      border-style: solid;
+      border-width: 60px;
+      border-image-source: url('https://png.pngtree.com/png-clipart/20230307/original/pngtree-simple-and-elegant-line-border-for-certificate-in-gold-png-image_8975159.png');
+      border-image-slice: 200;
+      border-image-repeat: stretch;
+    }
+    
+    .certificate-content {
+      position: relative;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 15px 40px;
+    }
+    .i { font-style: italic; font-size: 0.85em; opacity: 0.9; display: block; }
+
+    .content-block { width: 100%; }
+    .content-above-seal { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+    .content-below-seal { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 10px;}
+    
+    .central-seal {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+    .central-seal img { width: 160px; height: 160px; opacity: 0.15; }
+
+    /* Content Styles */
+    .logo img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
+    .cert-title { font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 3px; line-height: 1.2; }
+    .cert-subtitle { font-size: 13px; margin: 5px 0 10px 0; line-height: 1.3; }
+    .recipient-name { font-family: 'Cinzel', serif; font-size: 38px; color: var(--color-accent); margin: 0; }
+    .light-flare {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23d4c098' stop-opacity='0.8'/%3E%3Cstop offset='100%25' stop-color='%23d4c098' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M0 10 H100 M50 0 V20' stroke='url(%23g)' stroke-width='2'/%3E%3Cpath d='M15 10 L85 10 M50 3 V17' stroke='%23B9904A' stroke-width='0.5'/%3E%3C/svg%3E");
+        width: 120px; height: 20px; margin: 10px 0;
+    }
+    .info { font-size: 13px; line-height: 1.4; }
+    .course-title { font-family: 'Playfair Display', serif; font-size: 16px; max-width: 95%; margin: 5px 0 10px 0; line-height: 1.3; }
+    
+    /* FIXED: Always 3 columns */
+    .academic-results { display: flex; justify-content: center; gap: 30px; width: 100%; margin-bottom: 10px; }
+    .result-item { text-align: center; }
+    .result-label { font-size: 10px; text-transform: uppercase; color: var(--color-label); letter-spacing: 1px; }
+    .result-value { font-size: 13px; font-weight: bold; }
+
+    /* --- FINAL 3-COLUMN FOOTER --- */
+    .footer-content {
+      width: 100%;
+      margin-top: auto;
+      padding-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .authorization-block, .qr-code-block, .verification-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    
+    .authorization-block { align-items: flex-start; flex-basis: 30%; }
+    .qr-code-block { align-items: center; flex-basis: 20%;}
+    .verification-block { align-items: flex-end; flex-basis: 50%; } /* FIXED: Wider column */
+
+    .signature-image { height: 50px; margin-bottom: 5px; mix-blend-mode: darken; }
+    .signer-title { font-size: 12px; white-space: nowrap; }
+    .qr-code-block img { width: 70px; height: 70px; }
+    .verification-block div {
+        font-size: 12px; /* FIXED: Slightly larger for readability */
+        white-space: nowrap;
+        line-height: 1.6;
+    }
+
+    /* --- PORTRAIT MODE OVERRIDES --- */
+    .certificate.portrait-mode { width: 707px; height: 1000px; }
+    .certificate.portrait-mode .certificate-content { padding: 30px; }
+    .certificate.portrait-mode .recipient-name { font-size: 34px; }
+    .certificate.portrait-mode .academic-results { gap: 15px; }
+    .certificate.portrait-mode .result-value { font-size: 12px; }
+    
+    .certificate.portrait-mode .footer-content {
+        gap: 10px;
+    }
+    .certificate.portrait-mode .signer-title { font-size: 10px; }
+    .certificate.portrait-mode .signature-image { height: 45px; }
+    .certificate.portrait-mode .qr-code-block img { width: 60px; height: 60px; }
+    .certificate.portrait-mode .verification-block div { font-size: 10px; }
+
+
+    .btn-group { margin: 30px 0 10px 0; display: flex; gap: 15px; }
+    button {
+      padding: 10px 20px; font-size: 15px;
+      background-color: #fff; color: #383838; border: 1px solid #ccc;
+      cursor: pointer; border-radius: 6px; transition: all 0.3s ease;
+    }
+    button.active, button:hover {
+      background-color: var(--color-accent); color: #fff; border-color: var(--color-accent);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="btn-group">
+  <button id="btn-landscape" class="active" onclick="setOrientation('landscape')">Chỉnh Ngang / Landscape</button>
+  <button id="btn-portrait" onclick="setOrientation('portrait')">Chỉnh Đứng / Portrait</button>
+</div>
+
+<div id="certificate" class="certificate">
+  <div class="certificate-content">
+
+    <div class="central-seal">
+        <img src="https://img.pikbest.com/origin/09/35/50/09gpIkbEsTXD8.png!sw800" alt="Seal">
+    </div>
+
+    <div class="content-block content-above-seal">
+        <div class="logo">
+          <img src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/301752794_415329560738200_7679904628340922985_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=gQm3aioSK84Q7kNvwF3Jswc&_nc_oc=AdkwqdbOqS-hbd73y3DhTUra5wr1CypIO874g2c_3OH_jboi_YXn0CnNd-e4P4pbSFo&_nc_zt=23&_nc_ht=scontent.fsgn2-8.fna&_nc_gid=OSyQmr4veF2iaKQGuH7kqQ&oh=00_AfQhjs2FfgAF61MZfTpLV0YfUP5NhYfdgHNsSQUuuTvvgg&oe=688EAADE" alt="EMS Logo">
+        </div>
+        
+        <h1 class="cert-title">CHỨNG NHẬN<span class="i">CERTIFICATE OF ACHIEVEMENT</span></h1>
+        <div class="cert-subtitle">Chứng nhận học viên<span class="i">This is to certify that</span></div>
+        
+        <h2 class="recipient-name">LÊ QUANG MINH</h2>
+        <div class="light-flare"></div>
+    </div>
+    
+    <div class="content-block content-below-seal">
+        <div class="info">Đã hoàn thành xuất sắc khóa học<span class="i">Has successfully completed the course</span></div>
+        <h3 class="course-title">QUẢN LÝ DỰ ÁN VỚI GOOGLE APPSHEET<span class="i">DIGITALIZATION OF PROJECT MANAGEMENT WITH GOOGLE APPSHEET</span></h3>
+        
+        <div class="academic-results">
+            <div class="result-item">
+                <div class="result-label">Xếp loại<span class="i">Grade</span></div>
+                <div class="result-value">Xuất sắc / Excellence</div>
+            </div>
+            <div class="result-item">
+                <div class="result-label">Thời gian<span class="i">Duration</span></div>
+                <div class="result-value">08/07/2024 - 22/08/2024</div>
+            </div>
+            <div class="result-item">
+                <div class="result-label">Điểm số<span class="i">Final Score</span></div>
+                <div class="result-value">9.5 / 10</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-content">
+        <div class="authorization-block">
+            <img src="https://penstore.vn/wp-content/uploads/2018/11/Nhung-mau-chu-ky-dep-nhat-ten-Anh-hop-phong-thuy.png" alt="Signature" class="signature-image">
+            <div class="signer-title">Nhà sáng lập & CEO<span class="i">Founder & CEO</span></div>
+        </div>
+
+        <div class="qr-code-block">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://gpems.net/chung-chi/2407081912" alt="QR Code">
+        </div>
+        
+        <div class="verification-block">
+            <div><strong>Số chứng chỉ / <span class="i">Code</span>:</strong> 2407081912</div>
+            <div><strong>Ngày cấp / <span class="i">Issued Date</span>:</strong> 22-08-2024</div>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="btn-group">
+  <button onclick="downloadPDF()">Tải về PDF</button>
+  <button onclick="downloadPNG()">Tải về PNG</button>
+</div>
+
+<!-- SCRIPT -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  function setOrientation(mode) {
+    const certificate = document.getElementById('certificate');
+    const btnLandscape = document.getElementById('btn-landscape');
+    const btnPortrait = document.getElementById('btn-portrait');
+
+    if (mode === 'portrait') {
+      certificate.classList.add('portrait-mode');
+      btnPortrait.classList.add('active');
+      btnLandscape.classList.remove('active');
+    } else {
+      certificate.classList.remove('portrait-mode');
+      btnLandscape.classList.add('active');
+      btnPortrait.classList.remove('active');
+    }
+  }
+
+  async function download(format) {
+    const certificateElement = document.getElementById("certificate");
+    const canvas = await html2canvas(certificateElement, {
+      scale: 3,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff'
+    });
+    
+    const imgData = canvas.toDataURL(format === 'pdf' ? 'image/jpeg' : 'image/png', 1.0);
+    
+    if (format === 'pdf') {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: certificateElement.classList.contains('portrait-mode') ? 'portrait' : 'landscape',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      });
+      pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
+      pdf.save("chung-chi-le-quang-minh.pdf");
+    } else {
+      const link = document.createElement("a");
+      link.download = "chung-chi-le-quang-minh.png";
+      link.href = imgData;
+      link.click();
+    }
+  }
+
+  function downloadPDF() { download('pdf'); }
+  function downloadPNG() { download('png'); }
+</script>
+
+</body>
+</html>
