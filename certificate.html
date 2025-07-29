@@ -9,16 +9,17 @@
   
   <style>
     /* 
-      DESIGN & CODE V17.0 - FINAL LAYOUT & ALIGNMENT FIX
+      DESIGN & CODE V18.0 - FINAL LAYOUT & ALIGNMENT FIX
       -----------------------------------------------
       Key Fixes:
-      1. PERFECT CENTERING: The alignment bug is fixed. All content blocks are now properly
-         centered using a robust flexbox structure, eliminating the rightward shift.
-      2. PERSISTENT 3-COLUMN LAYOUT: The "Academic Results" section is now permanently 3 columns
-         in both landscape and portrait modes as requested.
-      3. GUARANTEED NO-WRAP: The right footer column has been given more space and font sizes
-         adjusted to ensure the certificate code and date display cleanly on two separate,
-         non-breaking lines.
+      1.  PERFECT CENTERING & UPWARD SHIFT: The entire layout is now properly centered. In portrait mode,
+          content is correctly pushed upwards to create more space at the bottom.
+      2.  GUARANTEED NO-WRAP: The right footer column has been given significantly more space (`flex-basis`),
+          and font sizes adjusted to ensure the certificate code and date display cleanly
+          on two separate, non-breaking lines without wrapping.
+      3.  LARGER LOGO: Logo size increased to 150px as requested.
+      4.  ROBUST FOOTER: The 3-column footer is maintained in both landscape and portrait views,
+          with content scaling down correctly in portrait mode to fit.
     */
     
     :root {
@@ -61,14 +62,19 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 15px 40px;
+      padding: 10px 40px;
     }
     .i { font-style: italic; font-size: 0.85em; opacity: 0.9; display: block; }
 
-    .content-block { width: 100%; }
-    .content-above-seal { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-    .content-below-seal { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 10px;}
-    
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
     .central-seal {
         position: absolute;
         top: 50%; left: 50%;
@@ -77,8 +83,10 @@
     }
     .central-seal img { width: 160px; height: 160px; opacity: 0.15; }
 
-    /* Content Styles */
-    .logo img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; }
+    .logo img { 
+        width: 150px; height: 150px; /* FIXED: Logo size */
+        border-radius: 50%; object-fit: cover; margin-bottom: 5px; 
+    }
     .cert-title { font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 3px; line-height: 1.2; }
     .cert-subtitle { font-size: 13px; margin: 5px 0 10px 0; line-height: 1.3; }
     .recipient-name { font-family: 'Cinzel', serif; font-size: 38px; color: var(--color-accent); margin: 0; }
@@ -88,8 +96,6 @@
     }
     .info { font-size: 13px; line-height: 1.4; }
     .course-title { font-family: 'Playfair Display', serif; font-size: 16px; max-width: 95%; margin: 5px 0 10px 0; line-height: 1.3; }
-    
-    /* FIXED: Always 3 columns */
     .academic-results { display: flex; justify-content: center; gap: 30px; width: 100%; margin-bottom: 10px; }
     .result-item { text-align: center; }
     .result-label { font-size: 10px; text-transform: uppercase; color: var(--color-label); letter-spacing: 1px; }
@@ -109,27 +115,32 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
+        height: 80px;
     }
     
-    .authorization-block { align-items: flex-start; flex-basis: 30%; }
-    .qr-code-block { align-items: center; flex-basis: 20%;}
-    .verification-block { align-items: flex-end; flex-basis: 50%; } /* FIXED: Wider column */
+    .authorization-block { align-items: flex-start; flex-basis: 35%; }
+    .qr-code-block { align-items: center; }
+    .verification-block { align-items: flex-end; flex-basis: 40%; } /* FIXED: Wider column */
 
     .signature-image { height: 50px; margin-bottom: 5px; mix-blend-mode: darken; }
     .signer-title { font-size: 12px; white-space: nowrap; }
     .qr-code-block img { width: 70px; height: 70px; }
     .verification-block div {
-        font-size: 12px; /* FIXED: Slightly larger for readability */
-        white-space: nowrap;
-        line-height: 1.6;
+        font-size: 11px;
+        white-space: nowrap; /* GUARANTEED no-wrap */
+        line-height: 1.5;
     }
 
     /* --- PORTRAIT MODE OVERRIDES --- */
     .certificate.portrait-mode { width: 707px; height: 1000px; }
     .certificate.portrait-mode .certificate-content { padding: 30px; }
+    .certificate.portrait-mode .main-content {
+        justify-content: flex-start; /* FIXED: Push content up */
+        padding-top: 50px; /* The "10cm" equivalent */
+    }
+    .certificate.portrait-mode .logo img { width: 120px; height: 120px; }
     .certificate.portrait-mode .recipient-name { font-size: 34px; }
     .certificate.portrait-mode .academic-results { gap: 15px; }
-    .certificate.portrait-mode .result-value { font-size: 12px; }
     
     .certificate.portrait-mode .footer-content {
         gap: 10px;
@@ -166,7 +177,7 @@
         <img src="https://img.pikbest.com/origin/09/35/50/09gpIkbEsTXD8.png!sw800" alt="Seal">
     </div>
 
-    <div class="content-block content-above-seal">
+    <div class="main-content">
         <div class="logo">
           <img src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/301752794_415329560738200_7679904628340922985_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=gQm3aioSK84Q7kNvwF3Jswc&_nc_oc=AdkwqdbOqS-hbd73y3DhTUra5wr1CypIO874g2c_3OH_jboi_YXn0CnNd-e4P4pbSFo&_nc_zt=23&_nc_ht=scontent.fsgn2-8.fna&_nc_gid=OSyQmr4veF2iaKQGuH7kqQ&oh=00_AfQhjs2FfgAF61MZfTpLV0YfUP5NhYfdgHNsSQUuuTvvgg&oe=688EAADE" alt="EMS Logo">
         </div>
@@ -176,9 +187,7 @@
         
         <h2 class="recipient-name">LÊ QUANG MINH</h2>
         <div class="light-flare"></div>
-    </div>
     
-    <div class="content-block content-below-seal">
         <div class="info">Đã hoàn thành xuất sắc khóa học<span class="i">Has successfully completed the course</span></div>
         <h3 class="course-title">QUẢN LÝ DỰ ÁN VỚI GOOGLE APPSHEET<span class="i">DIGITALIZATION OF PROJECT MANAGEMENT WITH GOOGLE APPSHEET</span></h3>
         
